@@ -88,7 +88,30 @@ const getRoomById=async(req,res)=>{
     })
    }
 }
+const getRoomsByHotel = async (req, res) => {
 
+    try {
+
+        const rooms = await Room.find({
+            hotel: req.params.hotelId
+        });
+
+        res.status(200).json({
+            success: true,
+            count: rooms.length,
+            data: rooms
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
 const updateRoom=async(req,res)=>{
     try{
         const {roomType,
@@ -155,5 +178,6 @@ module.exports={
     getRooms,
     getRoomById,
     updateRoom,
-    deleteRoom
+    deleteRoom,
+    getRoomsByHotel
 }
